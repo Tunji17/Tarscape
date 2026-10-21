@@ -67,6 +67,6 @@ internal extension Int {
         let string = byteArray.withUnsafeBufferPointer { String(cString: $0.baseAddress!) }
         // Size is an octal number; we need to convert to decimal.
         //return strtol(string, nil, 8)
-        self = Int(string, radix: 8) ?? 0
+        self = Int(string.trimmingCharacters(in: .whitespaces), radix: 8) ?? 0
     }
 }

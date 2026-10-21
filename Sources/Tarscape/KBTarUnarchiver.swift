@@ -222,9 +222,9 @@ public class KBTarUnarchiver {
                     // If set to use lazy loading, don't load file data into memory until the
                     // it's asked for by the user invoking regularFileContents().
                     if useLazyLoading {
-                        entry = KBTarEntry(lazyFileWithSubpath: subpath, tarURL: tarURL, location: location, modificationDate: modDate, fileSize: size)
+                        entry = KBTarEntry(lazyFileWithSubpath: subpath, tarURL: tarURL, location: location + UInt64(KBTar.blockSize), modificationDate: modDate, fileSize: size)
                     } else {
-                        let data = try self.data(at: location, length: size)
+                        let data = try self.data(at: location + UInt64(KBTar.blockSize), length: size)
                         entry = KBTarEntry(fileWithSubpath: subpath, regularFileContents: data, modificationDate: modDate, fileSize: size)
                     }
                     // If this is the exact match, we can stop looking (regular
@@ -307,9 +307,9 @@ public class KBTarUnarchiver {
                 // If set to use lazy loading, don't load file data into memory until the
                 // it's asked for by the user invoking regularFileContents().
                 if lazily {
-                    entry = KBTarEntry(lazyFileWithSubpath: subpath, tarURL: tarURL, location: location, modificationDate: modDate, fileSize: size)
+                    entry = KBTarEntry(lazyFileWithSubpath: subpath, tarURL: tarURL, location: location + UInt64(KBTar.blockSize), modificationDate: modDate, fileSize: size)
                 } else {
-                    let data = try self.data(at: location, length: size)
+                    let data = try self.data(at: location + UInt64(KBTar.blockSize), length: size)
                     entry = KBTarEntry(fileWithSubpath: subpath, regularFileContents: data, modificationDate: modDate, fileSize: size)
                 }
                 
